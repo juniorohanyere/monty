@@ -1,6 +1,8 @@
 #ifndef MONTY_H
 #define MONTY_H
 
+#define BUFFER_SIZE 1024
+
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -32,5 +34,14 @@ typedef struct instruction_s
 	char *opcode;
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
+
+int monty(char *filename);
+
+void access_error(char *filename);
+void syntax_error(int line_number, char *opcode);
+void malloc_error(void);
+
+char *read_file(char *filename);
+char **parser(char *buffer);
 
 #endif	/* MONTY_H */
