@@ -42,6 +42,8 @@ void syntax_error(int line_number, char *opcode);
 void malloc_error(void);
 
 char *read_file(char *filename);
-char **parser(char *buffer);
+char **parse(char *buffer, char *delimiter);
+
+void *_realloc(void *ptr, size_t new_size);
 
 #endif	/* MONTY_H */

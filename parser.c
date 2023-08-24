@@ -1,3 +1,11 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+#include "monty.h"
+
 /**
  * read_file - reads the content of a file
  *
@@ -9,7 +17,6 @@
  *
  * Return: return the buffer read from @filename
 */
-
 char *read_file(char *filename)
 {
 	int file, rfile;
@@ -41,14 +48,14 @@ char *read_file(char *filename)
 }
 
 /**
- * parser - parses a buffer into lines if the buffer contains new lines
+ * parse - parses a buffer into lines if the buffer contains new lines
  *
  * @buffer: the buffer to be parsed
  *
  * Return: return an array of the parsed buffer in form of lines
 */
 
-char **parser(char *buffer)
+char **parse(char *buffer, char *delimiter)
 {
 	int i, buffer_size = BUFFER_SIZE;
 	char *token;
@@ -61,7 +68,7 @@ char **parser(char *buffer)
 		exit(EXIT_FAILURE);
 	}
 
-	token = strtok(line, "\n");
+	token = strtok(buffer, delimiter);
 	if (token == NULL)
 		return (NULL);
 
@@ -80,7 +87,7 @@ char **parser(char *buffer)
 				exit(EXIT_FAILURE);
 			}
 		}
-		token = strtok(NULL, " ");
+		token = strtok(NULL, delimiter);
 	}
 	/* null termination */
 	tokens[i] = NULL;

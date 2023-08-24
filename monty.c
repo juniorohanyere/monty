@@ -1,3 +1,9 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "monty.h"
+
 /**
  * main - entry point
  *
@@ -9,35 +15,43 @@
 
 int main(int argc, char *argv[])
 {
-	monty();
+
+	char *filename = malloc(sizeof(char) * BUFFER_SIZE);
+	filename = argv[1];
+
+	monty(filename);
 
 	return (0);
 }
 
-
-/**
- * monty -
-*/
-
 int monty(char *filename)
 {
-	int file;
-	/* open the file in read only mode */
-	file = open(filename, O_RDONLY);
+	int i;
+	char *buffer;
+	char **lines, **instructs;
 
-	/* check for error on opening file */
-	if (file == -1)
+	buffer = malloc(sizeof(char) * BUFFER_SIZE);
+	lines = malloc(sizeof(char *) * BUFFER_SIZE);
+
+	if (!buffer || !lines)
 	{
-		access_error(filename);
+		malloc_error();
 		exit(EXIT_FAILURE);
 	}
 
-	/* read the opened file */
-	rfile = read(file, buffer, BUFFER_SIZE);
-	/* check for read error */
-	if (rfile == -1)
+	buffer = read_file(filename);
+	lines = parse(buffer, "\n");
+
+	for (i = 0; lines[i] != NULL; i++)
 	{
-		access_error(filename);
-		exit(EXIT_FAILURE);
+		instructs = malloc(sizeof(char *) * BUFFER_SIZE);
+		instructs = parse(lines[i], " ");
+		printf(instructs[0]);
+		if (strcmp(instructs[0], "push") == 0)
+			printf("Cool\n");
+		else
+			printf("Bad\n");
 	}
+
+	return (0);
 }
