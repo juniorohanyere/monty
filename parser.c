@@ -17,12 +17,10 @@
  *
  * Return: return the buffer read from @filename
 */
-char *read_file(char *filename)
+char *read_file(const char *filename)
 {
 	int file, rfile;
 	char *buffer;
-
-	buffer = malloc(sizeof(char) * BUFFER_SIZE);
 
 	/* open the file in read only mode */
 	file = open(filename, O_RDONLY);
@@ -34,12 +32,15 @@ char *read_file(char *filename)
 		exit(EXIT_FAILURE);
 	}
 
+	buffer = malloc(sizeof(char) * BUFFER_SIZE);
+
 	/* read the opened file */
 	rfile = read(file, buffer, BUFFER_SIZE);
 	/* check for read error */
 	if (rfile == -1)
 	{
 		access_error(filename);
+		free(buffer);
 		exit(EXIT_FAILURE);
 	}
 	close(file);
@@ -70,7 +71,11 @@ char **parse(char *buffer, char *delimiter)
 
 	token = strtok(buffer, delimiter);
 	if (token == NULL)
+	{
+		free(token);
+		free(tokens);
 		return (NULL);
+	}
 
 	for (i = 0; token != NULL; i++)
 	{
@@ -84,6 +89,7 @@ char **parse(char *buffer, char *delimiter)
 			if (!tokens)
 			{
 				malloc_error();
+				free(token);
 				exit(EXIT_FAILURE);
 			}
 		}

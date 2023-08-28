@@ -35,15 +35,20 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-int monty(char *filename);
+int monty(const char *filename);
+int execute(stack_t **stack, int line_number, char *opcode);
 
-void access_error(char *filename);
+void access_error(const char *filename);
 void syntax_error(int line_number, char *opcode);
 void malloc_error(void);
 
-char *read_file(char *filename);
+char *read_file(const char *filename);
 char **parse(char *buffer, char *delimiter);
 
 void *_realloc(void *ptr, size_t new_size);
+
+void push(stack_t **stack, unsigned int line_number);
+void pop(stack_t **stack, unsigned int line_number);
+void pall(stack_t **stack, unsigned int line_number);
 
 #endif	/* MONTY_H */

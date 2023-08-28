@@ -13,10 +13,10 @@
  * Return: return nothing
 */
 
-void access_error(char *filename)
+void access_error(const char *filename)
 {
 	/* print to the POSIX standard error */
-	dprintf(STDERR_FILENO, "Error: Can't open file %s", filename);
+	dprintf(STDERR_FILENO, "Error: Can't open file %s\n", filename);
 }
 
 /**
@@ -32,7 +32,7 @@ void access_error(char *filename)
 void syntax_error(int line_number, char *opcode)
 {
 	/* 2 is also same as STDERR_FILENO */
-	dprintf(2, "L%s: unknown instruction %s", line_number, opcode);
+	dprintf(2, "L%d: unknown instruction %s\n", line_number, opcode);
 }
 
 /**
@@ -44,5 +44,5 @@ void syntax_error(int line_number, char *opcode)
 
 void malloc_error(void)
 {
-	printf("Error: malloc failed");
+	printf("Error: malloc failed\n");
 }
