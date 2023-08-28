@@ -9,7 +9,7 @@
  * main - entry point
  *
  * @argc: the argument counter
- * @argv; variable containing a list of command line arguments
+ * @argv: variable containing a list of command line arguments
  *
  * Return: always return 0
 */
@@ -59,13 +59,10 @@ int monty(const char *filename)
 	for (i = 0; lines[i] != NULL; i++)
 	{
 		instructs = parse(lines[i], " ");
-
 		if (instructs != NULL)
 		{
 			if (execute(stack, i + 1, instructs[0]) == 0)
-			{
 				free(instructs);
-			}
 			else
 			{
 				syntax_error(i + 1, instructs[0]);
@@ -97,7 +94,7 @@ int execute(stack_t **stack, int line_number, char *opcode)
 {
 	int i;
 	instruction_t inst[] = {
-		{"push", push}, {NULL, NULL},
+		{"push", push}, {"pall", pall}, {NULL, NULL},
 	};
 
 	for (i = 0; inst[i].opcode != NULL; i++)
